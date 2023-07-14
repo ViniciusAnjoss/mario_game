@@ -16,19 +16,31 @@ const updateScore = () => {
     scoreElement.textContent = distance; // Atualiza o valor do placar no elemento HTML
 }
 
+function somTheme() {
+    const audio = new Audio('./soms/smb_world_clear.wav');
+    audio.loop = true;
+    audio.play();
+  }
+  
+  window.addEventListener('load', somTheme);
+
 const startGame = () => {
     gameLoop = setInterval(() => {
         const pipePosition = pipe.offsetLeft;
         const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '');
-
-        if (pipePosition <= 120 && pipePosition > 0 && marioPosition < 80) {
-            pipe.style.animation = 'none';
-            pipe.style.left = `${pipePosition}px`;
+          
+          if (pipePosition <= 120 && pipePosition > 0 && marioPosition < 80) {
+              pipe.style.animation = 'none';
+              pipe.style.left = `${pipePosition}px`;
+              function marioDie() {
+                  const audio = new Audio('./soms/smb_mariodie.wav');
+                  audio.play();
+                }        
+            marioDie()
 
             mario.src = './images/game-over.png';
             mario.style.width = '75px';
             mario.style.marginLeft = '50px';
-
             clearInterval(gameLoop);
             alert('Game Over!');
         }
@@ -39,4 +51,5 @@ const startGame = () => {
 }
 
 document.addEventListener('keydown', jump);
+
 startGame();
